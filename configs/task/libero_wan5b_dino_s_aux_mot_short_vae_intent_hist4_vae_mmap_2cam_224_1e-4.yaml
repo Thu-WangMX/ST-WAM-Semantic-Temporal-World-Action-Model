@@ -1,0 +1,48 @@
+# @package _global_
+
+defaults:
+  - override /data: libero_2cam
+  - override /model: fastwam_wan5b_dino_s_aux_mot_short_vae_intent_hist4
+  - _self_
+
+# Wan5B VAE/RGB + 1B DINO-S auxiliary three-branch MoT.
+# Intent source is four history frames encoded with Wan VAE, using the same
+# Perceiver intent summary and three-branch context injection as DINO-hist.
+batch_size: 4
+num_workers: 8
+
+model:
+  mot_checkpoint_mixed_attn: true
+  dino_config:
+    input_resolution: [224, 448]
+    latent_spatial_pool: [1, 1]
+    encode_microbatch_size: 16
+
+lr_scheduler_type: "cosine"
+learning_rate: 1e-4
+num_epochs: 10
+max_steps: null
+log_every: 10
+save_every: 2000
+eval_every: 200
+
+gradient_accumulation_steps: 4
+weight_decay: 1e-2
+resume: null
+
+data:
+  train:
+    video_size: [224, 448]
+    concat_multi_camera: "horizontal"
+    load_text_context: true
+    dino_latent_cache_dir: ./data/dino_latents_cache/libero_dino_s_2cam224_pool1x1_frame_exact_mmap
+    dino_latent_cache_mode: frame_mmap
+    dino_latent_cache_required: true
+    load_history_dino_latents: false
+    history_dino_latent_cache_required: false
+    load_history_vae_video: true
+    history_vae_frame_offsets: [-24, -16, -8, -1]
+    vae_latent_cache_dir: ./data/vae_latents_cache/libero_wan22vae38_2cam224_window_mmap
+    vae_latent_cache_mode: window_mmap
+    vae_latent_cache_required: true
+    skip_video_load_if_latent_cached: true

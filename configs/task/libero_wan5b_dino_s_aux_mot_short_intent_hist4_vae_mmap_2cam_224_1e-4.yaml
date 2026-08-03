@@ -1,0 +1,14 @@
+# @package _global_
+
+defaults:
+  - libero_wan5b_dino_s_aux_mot_short_intent_hist4_2cam_224_1e-4
+  - _self_
+
+# Same hist4 short-intent 3-MoT setup, but training reads cached Wan VAE
+# window latents and cached DINO latents instead of RGB video.
+data:
+  train:
+    vae_latent_cache_dir: ./data/vae_latents_cache/libero_wan22vae38_2cam224_window_mmap
+    vae_latent_cache_mode: window_mmap
+    vae_latent_cache_required: true
+    skip_video_load_if_latent_cached: true

@@ -1,0 +1,31 @@
+# @package _global_
+
+defaults:
+  - override /data: libero_2cam
+  - override /model: fastwam_dino
+  - _self_
+
+# dataloading
+batch_size: 4
+num_workers: 8
+
+model:
+  mot_checkpoint_mixed_attn: true
+  dino_config:
+    input_resolution: [224, 448]
+    latent_spatial_pool: [1, 2]  # 14x28 -> 14x14 after DINO; safer for 8xGPU memory.
+    encode_microbatch_size: 16
+
+# scheduler
+lr_scheduler_type: "cosine"
+learning_rate: 1e-4
+num_epochs: 30
+max_steps: null
+log_every: 10
+save_every: 2000
+eval_every: 200
+
+# training
+gradient_accumulation_steps: 4
+weight_decay: 1e-2
+resume: null

@@ -1,0 +1,14 @@
+# @package _global_
+
+defaults:
+  - libero_dino_s_smallvideo_2cam_224_1e-4
+  - _self_
+
+# Keep no-pool DINO cache/targets, but reduce VideoDiT sequence length with a
+# learnable spatial patch merge: [T,H,W] patch size [1,1,2] maps 14x28 -> 14x14.
+model:
+  video_dit_config:
+    latent_patch_size: [1, 1, 2]
+
+wandb:
+  name: libero_dino_s_smallvideo_2cam224_learnpatch_1x1x2

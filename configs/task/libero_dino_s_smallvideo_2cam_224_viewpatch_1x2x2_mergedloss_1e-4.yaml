@@ -1,0 +1,26 @@
+# @package _global_
+
+defaults:
+  - libero_dino_s_smallvideo_2cam_224_viewpatch_1x2x2_1e-4
+  - _self_
+
+# View-aware [1,2,2] learnable DINO token merge with merged-token video loss.
+#
+# Historical viewpatch dense loss:
+#   DiT token grid:        2 views * 7 * 7 = 98 tokens/frame
+#   head output per token: 384 * 2 * 2
+#   loss target:           dense DINO velocity [384, T, 14, 28]
+#
+# This config keeps the same input token merge, but changes the output/loss
+# space so each merged token predicts one 384-dim velocity. The target velocity
+# is fixed-averaged over the same [1,2,2] patch group, giving:
+#   loss target: [384, T, 7, 14]  # 98 merged tokens/frame
+#
+# Default configs keep output_patch_space=dense, so this does not affect any
+# previous no-pool or viewpatch run.
+model:
+  video_dit_config:
+    output_patch_space: "merged"
+
+wandb:
+  name: libero_dino_s_smallvideo_2cam224_viewpatch_1x2x2_mergedloss

@@ -1,0 +1,64 @@
+# @package _global_
+
+defaults:
+  - override /data: robotwin
+  - override /model: fastwam_wan5b_dino_s_aux_mot_short_qwen3vl_hist4
+  - _self_
+
+# Qwen-intent 3-MoT RoboTwin main experiment on 15 clean tasks. The source
+# dataset is arranged in 550-episode task blocks: 50 clean, then 500 random.
+batch_size: 2
+num_workers: 8
+
+model:
+  mot_checkpoint_mixed_attn: true
+  dino_config:
+    input_resolution: [384, 320]
+    latent_spatial_pool: [1, 1]
+    encode_microbatch_size: 4
+    load_backbone: true
+  semantic_history_config:
+    history_offsets: [-24, -16, -8, -1]
+    max_history_frames: 4
+    processor_max_pixels: 100352
+
+lr_scheduler_type: "cosine"
+learning_rate: 1e-4
+num_epochs: 5
+max_steps: null
+log_every: 10
+save_every: 1000
+eval_every: 500
+
+gradient_accumulation_steps: 8
+weight_decay: 1e-2
+resume: null
+
+data:
+  train:
+    video_size: [384, 320]
+    concat_multi_camera: "robotwin"
+    val_set_proportion: 0.0
+    episode_filter: robotwin_clean
+    robotwin_split_block_size: 550
+    robotwin_clean_episodes_per_block: 50
+    # 00 adjust_bottle; 01 beat_block_hammer; 02 blocks_ranking_rgb;
+    # 03 blocks_ranking_size; 04 click_alarmclock; 05 click_bell;
+    # 07 grab_roller; 14 move_playingcard_away; 18 pick_diverse_bottles;
+    # 19 pick_dual_bottles; 20 place_a2b_left; 21 place_a2b_right;
+    # 27 place_container_plate; 30 place_fan; 38 put_bottles_dustbin.
+    robotwin_task_block_indices: [0, 1, 2, 3, 4, 5, 7, 14, 18, 19, 20, 21, 27, 30, 38]
+    expected_filtered_episodes: 750
+    load_text_context: true
+    pretrained_norm_stats: ./configs/stats/robotwin_clean15_dataset_stats.json
+    allow_latent_cache_with_episode_filter: false
+    load_semantic_image: true
+    semantic_frame_offset: 0
+    dino_latent_cache_dir: null
+    dino_latent_cache_mode: frame_mmap
+    dino_latent_cache_required: false
+    load_history_dino_latents: false
+    load_history_dino_video: true
+    history_dino_frame_offsets: [-24, -16, -8, -1]
+    history_dino_latent_cache_required: false
+  val: null

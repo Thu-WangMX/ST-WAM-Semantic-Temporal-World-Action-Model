@@ -1,0 +1,23 @@
+# @package _global_
+
+defaults:
+  - libero_dino_s_smallvideo_2cam_224_1e-4
+  - _self_
+
+# View-aware learnable DINO token merge with a milder spatial bottleneck.
+# The 2-camera no-pool DINO grid is [T, H, W]=[..., 14, 28].
+# This first splits W into 2 views of 14x14, then applies [1,1,2] per view:
+#   2 x 14 x 14 -> 2 x 14 x 7 tokens per frame = 196 tokens/frame.
+# The head still unpatchifies back to the original dense 14x28 DINO target.
+#
+# Compared with viewpatch_1x2x2:
+#   [1,2,2] -> 98 tokens/frame, stronger spatial compression.
+#   [1,1,2] -> 196 tokens/frame, same token count as fixed avg pooling but learnable.
+model:
+  video_dit_config:
+    latent_patch_size: [1, 1, 2]
+    latent_patch_mode: "view"
+    latent_num_views: 2
+
+wandb:
+  name: libero_dino_s_smallvideo_2cam224_viewpatch_1x1x2

@@ -1,0 +1,51 @@
+# @package _global_
+
+defaults:
+  - override /data: robotwin
+  - override /model: fastwam_wan5b_dino_s_aux_mot
+  - _self_
+
+# No-intent Wan5B VAE/RGB + DINO-S auxiliary three-branch MoT on RoboTwin,
+# trained only on clean demonstrations. This clean-only task keeps DINO online
+# by default so filtered dataset frame ids cannot be misaligned with a full-data
+# DINO frame cache.
+batch_size: 1
+num_workers: 8
+
+model:
+  mot_checkpoint_mixed_attn: true
+  dino_config:
+    input_resolution: [384, 320]
+    latent_spatial_pool: [1, 1]
+    encode_microbatch_size: 4
+    load_backbone: true
+
+lr_scheduler_type: "cosine"
+learning_rate: 1e-4
+num_epochs: 5
+max_steps: null
+log_every: 10
+save_every: 2500
+eval_every: 500
+
+gradient_accumulation_steps: 12
+weight_decay: 1e-2
+resume: null
+
+data:
+  train:
+    video_size: [384, 320]
+    concat_multi_camera: "robotwin"
+    val_set_proportion: 0.0
+    episode_filter: robotwin_clean
+    robotwin_split_block_size: 550
+    robotwin_clean_episodes_per_block: 50
+    load_text_context: true
+    pretrained_norm_stats: ./configs/stats/robotwin_clean_dataset_stats.json
+    allow_latent_cache_with_episode_filter: false
+    dino_latent_cache_dir: null
+    dino_latent_cache_mode: frame_mmap
+    dino_latent_cache_required: false
+    load_history_dino_latents: false
+    load_history_dino_video: false
+  val: null
