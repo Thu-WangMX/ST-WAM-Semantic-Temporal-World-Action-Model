@@ -67,7 +67,9 @@ python scripts/preprocess_dino_video_dit_backbone.py \
   --output checkpoints/DinoVideoDiT_smallvideo_from_Wan22_alphascale_1024hdim.pt
 ```
 
-Released checkpoints are hosted at
+## Released Checkpoints
+
+Trained ST-WAM checkpoints are available on
 [ModelScope](https://modelscope.cn/models/THU4Spiderman/Semantic_Temporal_World_Action_Model).
 
 ## Data And Caches
@@ -105,7 +107,6 @@ bash scripts/train_zero1.sh 8 \
 
 The main RoboTwin configuration is
 `robotwin_wan5b_dino_s_aux_mot_short_qwen3vl_hist4_3cam_384x320_1e-4`.
-The clean-only 15-task setup and its normalization statistics are also included.
 Distributed launch details are cluster dependent; keep the paper's global batch
 1024 when changing GPU count or per-device batch size.
 
