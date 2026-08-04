@@ -1,7 +1,11 @@
 # ST-WAM
 
+[![arXiv](https://img.shields.io/badge/arXiv-2607.28993-b31b1b.svg)](https://arxiv.org/abs/2607.28993)
+[![Project Page](https://img.shields.io/badge/Project-Page-2ea44f.svg)](https://thu-wangmx.github.io/st-wam/)
+[![ModelScope](https://img.shields.io/badge/ModelScope-Checkpoints-624aff.svg)](https://modelscope.cn/models/THU4Spiderman/Semantic_Temporal_World_Action_Model)
+
 Official implementation of **ST-WAM: Semantic-Temporal World Action Model for
-Robust Robot Manipulation**.
+Robust Manipulation under Visual Distribution Shifts**.
 
 ST-WAM extends [FastWAM](https://github.com/yuantianyuan01/FastWAM) with two
 complementary components:
@@ -165,3 +169,16 @@ upstream notices.
 ## License
 
 See [LICENSE](LICENSE).
+
+## Citation
+
+If you find this work useful, please cite:
+
+```bibtex
+@article{wang2026stwam,
+  title={{ST-WAM}: Semantic-Temporal World Action Model for Robust Manipulation under Visual Distribution Shifts},
+  author={Wang, Mingxin and Hu, Bin and Qian, Bin and Jiang, Kaitao and Wu, Haoning and Yan, Feng and Jing, Bowen and Hao, Ruiyang and Wang, Enyi and Niu, Kangning and Yang, Yandan and Xu, Mu and Wang, Yan and Liu, Houde and Li, Tianlun},
+  journal={arXiv preprint arXiv:2607.28993},
+  year={2026}
+}
+```
