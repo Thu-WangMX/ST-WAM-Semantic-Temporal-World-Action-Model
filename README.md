@@ -115,7 +115,7 @@ Distributed launch details are cluster dependent; keep the paper's global batch
 
 ## Evaluation
 
-LIBERO evaluates all four suites with 30 trials per task and replans every 10
+LIBERO evaluates all four suites with 50 trials per task and replans every 10
 environment steps:
 
 ```bash
@@ -123,7 +123,7 @@ export LIBERO_ROOT=/path/to/LIBERO
 python experiments/libero/run_libero_manager.py \
   task=libero_wan5b_dino_s_aux_mot_short_qwen3vl_hist4_vae_mmap_2cam_224_1e-4 \
   ckpt=/path/to/checkpoint.pt \
-  EVALUATION.num_trials=30 \
+  EVALUATION.num_trials=50 \
   EVALUATION.output_dir=./evaluate_results/libero/st_wam \
   MULTIRUN.num_gpus=8 MULTIRUN.max_tasks_per_gpu=2
 ```
