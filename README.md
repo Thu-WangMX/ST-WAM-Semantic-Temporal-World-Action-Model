@@ -159,9 +159,7 @@ python experiments/robotwin/run_robotwin_manager.py \
 | CAIR with VAE History | `fastwam_wan5b_dino_s_aux_mot_short_qwen3vl_vae_hist4` |
 | ST-WAM | `fastwam_wan5b_dino_s_aux_mot_short_qwen3vl_hist4` |
 
-Matching benchmark task YAMLs are in `configs/task/`. Static contract checks for
-the semantic variants live in `scripts/check_semantic_ablation_variants.py` and
-`scripts/check_qwen_vae_history_*.py`.
+Matching benchmark task YAMLs are in `configs/task/`.
 
 ## Acknowledgements
 
