@@ -75,8 +75,11 @@ Trained ST-WAM checkpoints are available on
 ## Data And Caches
 
 Dataset locations are relative in `configs/data/` and can be overridden with
-Hydra. The LIBERO main task expects precomputed Wan VAE and DINO frame caches;
-RoboTwin can encode DINO history online.
+Hydra. The LIBERO main task expects precomputed Wan VAE and DINO frame caches.
+For RoboTwin, online DINO encoding is recommended because both the dataset and
+the resulting feature cache are substantially larger. A precomputed
+[RoboTwin DINO cache](https://modelscope.cn/datasets/THU4Spiderman/Robotwin-dino-cache)
+is nevertheless provided as an optional download.
 
 ```bash
 TASK=libero_wan5b_dino_s_aux_mot_short_qwen3vl_hist4_vae_mmap_2cam_224_1e-4
